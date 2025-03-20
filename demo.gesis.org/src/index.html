@@ -4,5 +4,35 @@
 
 <h1>Demo</h1>
 
+<button id="button-click-here">Click here</button>
+
+<h2>Messages</h2>
+
+<ol id="list-of-messages">
+</ol>
+
+<script>
+    const button_click_here = document.getElementById("button-click-here");
+    const list_of_messages = document.getElementById("list-of-messages");
+    button_click_here.addEventListener("click", function (e) {
+        console.log("Click received!");
+
+        const my_request = new Request(
+            "http://localhost:5000",
+        );
+        
+        fetch(my_request)
+            .then((response) => {
+                console.log(response);
+                return response.json();
+            })
+            .then((data) => {
+                const new_node = document.createElement("li");
+                new_node.innerText = data.msg;
+                list_of_messages.appendChild(new_node);
+            })
+    });
+</script>
+
 </body>
 </html>
