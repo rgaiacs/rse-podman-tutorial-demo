@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: demo
+  name: demo
+spec:
+  containers:
+    - name: frontend
+      image: localhost/demo.gesis.org
+      ports:
+        - containerPort: 8080
+          hostPort: 8080
+      volumeMounts:
+        - mountPath: /var/app
+          name: frontend-src
+    - name: backend
+      image: localhost/api.demo.gesis.org
+      ports:
+        - containerPort: 5000
+          hostPort: 5000
+      volumeMounts:
+        - mountPath: /var/app
+          name: backend-src
+  volumes:
+    - hostPath:
+        path: ./demo.gesis.org/src
+        type: Directory
+      name: frontend-src
+    - hostPath:
+        path: ./api.demo.gesis.org/src
+        type: Directory
+      name: backend-src
