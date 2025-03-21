@@ -1,0 +1,14 @@
+name: Sync with GESIS GitLab
+on:
+  push:
+    branches:
+      - main
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - env:
+          GIT_TOKEN: ${{ secrets.GESIS_GITLAB_TOKEN }}
+        run: git remote add gesis "https://bot:${GIT_TOKEN}@git.gesis.org/rse/podman/demo.git"
+      - run: git push gesis main
