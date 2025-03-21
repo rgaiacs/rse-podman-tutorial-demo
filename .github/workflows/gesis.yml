@@ -18,7 +18,7 @@ jobs:
           fi
       - name: Update remote
         env:
-          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GIT_TOKEN: ${{ secrets.GESIS_GITLAB_TOKEN }}
         run: |
           git remote set-url gesis https://bot:${GIT_TOKEN}@git.gesis.org/rse/podman/demo.git
       - name: Push main
