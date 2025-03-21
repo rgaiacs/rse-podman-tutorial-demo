@@ -8,7 +8,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - env:
-          GIT_TOKEN: ${{ secrets.GESIS_GITLAB_TOKEN }}
-        run: git remote add gesis "https://bot:${GIT_TOKEN}@git.gesis.org/rse/podman/demo.git"
-      - run: git push gesis main
+        with:
+          fetch-depth: 0
+      - name: Create remote
+        run: |
+          if [ -z "$(git remote | grep gesis)" ]
+          then
+          git remote add gesis https://git.gesis.org/rse/podman/demo.git
+          fi
+      - name: Update remote
+        env:
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+        run: |
+          git remote set-url gesis https://bot:${GIT_TOKEN}@git.gesis.org/rse/podman/demo.git
+      - name: Push main
+        run: |
+          git push gesis ${GITHUB_SHA}:main
