@@ -5,6 +5,7 @@ on:
       - main
 jobs:
   Explore-GitHub-Actions:
+    if: github.repository == 'rgaiacs/rse-podman-tutorial-demo'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
